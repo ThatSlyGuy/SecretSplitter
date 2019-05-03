@@ -1,6 +1,6 @@
 using Hope.Random;
 using Hope.Random.Strings;
-using Hope.Security.SymmetricEncryption.CrossPlatform;
+using Hope.Security.SymmetricEncryption.DotNetDPAPI;
 using Org.BouncyCastle.Crypto.Digests;
 using System;
 using System.IO;
@@ -70,7 +70,7 @@ namespace SecretEncryptor
 
         private static string Encrypt(string secret, string key)
         {
-            using (SecureDataEncryptor dataEncryptor = new SecureDataEncryptor(new AdvancedSecureRandom(new Blake2bDigest(512), RandomString.Secure.Blake2.GetString(key, 64))))
+            using (SecretEncryptor dataEncryptor = new SecretEncryptor(new AdvancedSecureRandom(new Blake2bDigest(512), RandomString.Secure.Blake2.GetString(key, 64))))
             {
                 return dataEncryptor.Encrypt(secret, RandomString.Secure.SHA3.GetString(key, 64));
             }
@@ -78,7 +78,7 @@ namespace SecretEncryptor
 
         private static string Decrypt(string ciphertext, string key)
         {
-            using (SecureDataEncryptor dataEncryptor = new SecureDataEncryptor(new AdvancedSecureRandom(new Blake2bDigest(512), RandomString.Secure.Blake2.GetString(key, 64))))
+            using (SecretEncryptor dataEncryptor = new SecretEncryptor(new AdvancedSecureRandom(new Blake2bDigest(512), RandomString.Secure.Blake2.GetString(key, 64))))
             {
                 return dataEncryptor.Decrypt(ciphertext, RandomString.Secure.SHA3.GetString(key, 64));
             }
