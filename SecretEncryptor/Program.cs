@@ -22,7 +22,11 @@ namespace SecretEncryptor
 
         private static void DecryptData()
         {
-            Console.WriteLine("Enter encryption key: ");
+            Console.WriteLine("Enter secret name/type:");
+
+            string name = Console.ReadLine();
+
+            Console.WriteLine("\nEnter encryption key: ");
 
             string key = Console.ReadLine();
 
@@ -30,7 +34,7 @@ namespace SecretEncryptor
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    using (StreamReader readtext = new StreamReader("secret_1_" + (i + 1) + ".txt"))
+                    using (StreamReader readtext = new StreamReader(name + "_secret_" + (i + 1) + ".txt"))
                     {
                         string ciphertext = readtext.ReadLine();
                         string decryptedSecret = dataEncryptor.Decrypt(ciphertext, RandomString.Secure.SHA3.GetString(key, 64));
@@ -43,7 +47,11 @@ namespace SecretEncryptor
 
         private static void EncryptData()
         {
-            Console.WriteLine("Enter encryption key: ");
+            Console.WriteLine("Enter secret name/type:");
+
+            string name = Console.ReadLine();
+
+            Console.WriteLine("\nEnter encryption key: ");
 
             string key = Console.ReadLine();
 
@@ -58,7 +66,7 @@ namespace SecretEncryptor
 
                     Console.WriteLine("\nSecret #" + (i + 1) + " encrypted: " + encryptedSecret + "\n");
 
-                    using (StreamWriter writer = new StreamWriter("secret_1_" + (i + 1) + ".txt"))
+                    using (StreamWriter writer = new StreamWriter(name + "_secret_" + (i + 1) + ".txt"))
                     {
                         writer.Write(encryptedSecret);
                     }
