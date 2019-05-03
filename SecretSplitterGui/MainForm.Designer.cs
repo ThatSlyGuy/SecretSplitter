@@ -63,6 +63,14 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabs.SuspendLayout();
             this.tabRecover.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -79,6 +87,9 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.pnlCreateHeader.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
@@ -528,6 +539,10 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.panel1);
+            this.tabPage1.Controls.Add(this.button1);
+            this.tabPage1.Controls.Add(this.label10);
+            this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -535,6 +550,78 @@
             this.tabPage1.TabIndex = 5;
             this.tabPage1.Text = "Read";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 12);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(500, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Enter the drives you wish to read from. The crypto folder must be located in the " +
+    "root directory of the drive.";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 34);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(235, 13);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Click the scan button when the drives are ready.";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(249, 28);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Scan";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(3, 29);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(194, 154);
+            this.checkedListBox1.TabIndex = 3;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 10);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(194, 13);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "The following secrets have been found:";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox4);
+            this.panel1.Controls.Add(this.checkedListBox1);
+            this.panel1.Controls.Add(this.label11);
+            this.panel1.Location = new System.Drawing.Point(3, 57);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(520, 188);
+            this.panel1.TabIndex = 5;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.textBox1);
+            this.groupBox4.Location = new System.Drawing.Point(203, 29);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(310, 52);
+            this.groupBox4.TabIndex = 5;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Enter the password to decrypt the secrets:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(7, 20);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(295, 20);
+            this.textBox1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -571,6 +658,12 @@
             this.tableLayoutPanel3.PerformLayout();
             this.pnlCreateHeader.ResumeLayout(false);
             this.pnlCreateHeader.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -617,6 +710,14 @@
         private System.Windows.Forms.Button btnBrowsePlaintext;
         private System.Windows.Forms.TextBox txtSecretFilePath;
         private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
