@@ -50,3 +50,7 @@ _ReSharper*/
 
 # Git temp files
 *.orig
+.vs/SecretSplitter/v15/Server/sqlite3/db.lock
+.vs/SecretSplitter/v15/Server/sqlite3/storage.ide
+.vs/SecretSplitter/v15/Server/sqlite3/storage.ide-shm
+.vs/SecretSplitter/v15/Server/sqlite3/storage.ide-wal

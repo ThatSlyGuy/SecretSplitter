@@ -62,6 +62,7 @@
             this.btnCreateShares = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabs.SuspendLayout();
             this.tabRecover.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -84,6 +85,7 @@
             // 
             this.tabs.Controls.Add(this.tabRecover);
             this.tabs.Controls.Add(this.tabCreate);
+            this.tabs.Controls.Add(this.tabPage1);
             this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabs.Location = new System.Drawing.Point(0, 0);
             this.tabs.Margin = new System.Windows.Forms.Padding(2);
@@ -524,6 +526,16 @@
             this.btnCreateShares.UseVisualStyleBackColor = true;
             this.btnCreateShares.Click += new System.EventHandler(this.btnCreateShares_Click);
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(752, 452);
+            this.tabPage1.TabIndex = 5;
+            this.tabPage1.Text = "Read";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -604,6 +616,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnBrowsePlaintext;
         private System.Windows.Forms.TextBox txtSecretFilePath;
+        private System.Windows.Forms.TabPage tabPage1;
     }
 }
 

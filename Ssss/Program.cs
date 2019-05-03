@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -18,54 +19,74 @@ namespace Ssss {
     internal class Program {
         private const string Version = "0.53 (.net)";
 
-        private static void Main(string[] args) {
-            Arguments.ParseArguments(args);
+        private static void Main(string[] args)
+        {
+            var drives = DriveInfo.GetDrives()
+                                  .Where(drive => drive.IsReady);
 
-            if (GetProgramNameWithoutExtension().EndsWith("-split", StringComparison.OrdinalIgnoreCase)) {
-                if (Arguments.ShowHelp || Arguments.ShowVersion) {
-                    Console.WriteLine("Split secrets using Shamir's Secret Sharing Scheme.");
-                    Console.WriteLine();
-                    Console.WriteLine("ssss-split -t threshold -n shares [-w token] [-s level] [-x] [-q] [-Q] [-D] [-v]");
+            foreach (DriveInfo d in drives)
+            {
+                Console.WriteLine(d.Name + " => " + d.DriveType + " " + d.IsReady);
+
+                var directories = Directory.GetDirectories(d.RootDirectory.FullName);
+
+                foreach (var directory in directories)
+                {
+                    Console.WriteLine(directory);
                 }
-
-                ShowVersionAndQuitIfAsked();
-
-                if (Arguments.Threshold < 2) {
-                    Fatal("invalid parameters: invalid threshold value");
-                }
-
-                if (Arguments.Shares < Arguments.Threshold) {
-                    Fatal("invalid parameters: number of shares smaller than threshold");
-                }
-
-                if ((Arguments.SecurityLevel > 0) && !IrreduciblePolynomial.IsValidDegree(Arguments.SecurityLevel)) {
-                    Fatal("invalid parameters: invalid security level");
-                }
-
-                int maxTokenLength = IrreduciblePolynomial.MaxDegree/8;
-
-                if (!String.IsNullOrWhiteSpace(Arguments.Token) && (Arguments.Token.Length > maxTokenLength)) {
-                    Fatal("invalid parameters: token too long");
-                }
-
-                Split();
             }
-            else {
-                if (Arguments.ShowHelp || Arguments.ShowVersion) {
-                    Console.WriteLine("Combine shares using Shamir's Secret Sharing Scheme.");
-                    Console.WriteLine();
-                    Console.WriteLine("ssss-combine -t threshold [-x] [-q] [-Q] [-D] [-v]");
-                }
 
-                ShowVersionAndQuitIfAsked();
-
-                if (Arguments.Threshold < 2) {
-                    Fatal("invalid parameters: invalid threshold value");
-                }
-
-                Combine();
-            }
+            Console.ReadKey();
         }
+
+        //private static void Main(string[] args) {
+        //    Arguments.ParseArguments(args);
+
+        //    if (GetProgramNameWithoutExtension().EndsWith("-split", StringComparison.OrdinalIgnoreCase)) {
+        //        if (Arguments.ShowHelp || Arguments.ShowVersion) {
+        //            Console.WriteLine("Split secrets using Shamir's Secret Sharing Scheme.");
+        //            Console.WriteLine();
+        //            Console.WriteLine("ssss-split -t threshold -n shares [-w token] [-s level] [-x] [-q] [-Q] [-D] [-v]");
+        //        }
+
+        //        ShowVersionAndQuitIfAsked();
+
+        //        if (Arguments.Threshold < 2) {
+        //            Fatal("invalid parameters: invalid threshold value");
+        //        }
+
+        //        if (Arguments.Shares < Arguments.Threshold) {
+        //            Fatal("invalid parameters: number of shares smaller than threshold");
+        //        }
+
+        //        if ((Arguments.SecurityLevel > 0) && !IrreduciblePolynomial.IsValidDegree(Arguments.SecurityLevel)) {
+        //            Fatal("invalid parameters: invalid security level");
+        //        }
+
+        //        int maxTokenLength = IrreduciblePolynomial.MaxDegree/8;
+
+        //        if (!String.IsNullOrWhiteSpace(Arguments.Token) && (Arguments.Token.Length > maxTokenLength)) {
+        //            Fatal("invalid parameters: token too long");
+        //        }
+
+        //        Split();
+        //    }
+        //    else {
+        //        if (Arguments.ShowHelp || Arguments.ShowVersion) {
+        //            Console.WriteLine("Combine shares using Shamir's Secret Sharing Scheme.");
+        //            Console.WriteLine();
+        //            Console.WriteLine("ssss-combine -t threshold [-x] [-q] [-Q] [-D] [-v]");
+        //        }
+
+        //        ShowVersionAndQuitIfAsked();
+
+        //        if (Arguments.Threshold < 2) {
+        //            Fatal("invalid parameters: invalid threshold value");
+        //        }
+
+        //        Combine();
+        //    }
+        //}
 
         private static void ShowVersionAndQuitIfAsked() {
             if (Arguments.ShowVersion) {
