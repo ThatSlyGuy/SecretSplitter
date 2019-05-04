@@ -417,6 +417,8 @@ Delete one of the above lines and press ""Recover Secret""";
 
         private void button1_Click(object sender, EventArgs e)
         {
+            const int MIN_SECRETS_COUNT = 2;
+
             var readyDrives = DriveInfo.GetDrives()
                                   .Where(drive => drive.IsReady);
 
@@ -425,61 +427,50 @@ Delete one of the above lines and press ""Recover Secret""";
                                          .Select(drive => Directory.GetDirectories(drive.RootDirectory.FullName).Single(directory => directory.Contains("secrets")))
                                          .ToList();
 
-            //foreach (DriveInfo d in drives)
-            //{
-            //    Console.WriteLine(d.Name + " => " + d.DriveType + " " + d.IsReady);
-
-            //    var directories = Directory.GetDirectories(d.RootDirectory.FullName);
-
-            //    foreach (var directory in directories)
-            //    {
-            //        Console.WriteLine(directory);
-            //    }
-            //}
-
-            if (directories.Count() < 2)
+            if (directories.Count() < MIN_SECRETS_COUNT)
                 return;
 
-            List<string> uniqueSecrets = new List<string>();
-            List<string[]> files = new List<string[]>();
+            List<string> tempSecrets = new List<string>();
+            List<string> files = new List<string>();
 
             for (int i = 0; i < directories.Count(); i++)
             {
-                files.Add(Directory.GetFiles(directories[i]));
+                string[] directoryFiles = Directory.GetFiles(directories[i]);
 
-                string[] directoryFiles = files[i];
+                files.AddRange(directoryFiles);
 
                 for (int j = 0; j < directoryFiles.Count(); j++)
                 {
                     string temp = directoryFiles[j].Remove(0, directoryFiles[j].LastIndexOf('\\') + 1);
                     string uniqueSecret = temp.Remove(temp.Length - 6, 6);
 
-                    uniqueSecrets.Add(uniqueSecret);
+                    tempSecrets.Add(uniqueSecret);
                 }
             }
 
-            uniqueSecrets = uniqueSecrets.Distinct().ToList();
+            tempSecrets = tempSecrets.Distinct().ToList();
 
-            foreach (var fileCollection in files)
+            foreach (var secret in tempSecrets)
             {
-                bool hasFile = false;
-
-
-                // Make sure that each collection of files has each unique secret
-                for (int i = 0; i < fileCollection.Length; i++)
-                {
-                    //hasFile = fileCollection[i].Contains()
-                    MessageBox.Show(fileCollection[i]);
-                }
+                if (files.Where(file => file.Contains(secret)).Count() >= MIN_SECRETS_COUNT)
+                    validSecrets.Add(secret);
             }
 
-            //foreach (var secret in uniqueSecrets)
-            //{
-            //    MessageBox.Show(secret);
-            //}
+            foreach (var secret in validSecrets)
+            {
+                secretsChecklist.Items.Add(secret, false);
+                secretCollections.Add(new SecretCollection(secret, files.Where(file => file.Contains(secret))
+                                                                        .Take(MIN_SECRETS_COUNT)
+                                                                        .ToArray()));
+            }
 
             panel1.Visible = true;
         }
+
+        private readonly List<string> validSecrets = new List<string>();
+        private readonly List<SecretCollection> secretCollections = new List<SecretCollection>();
+
+        private SecretCollection activeCollection;
 
         private bool pass;
         private int? secretsChecklistCheckedIndex;
@@ -498,17 +489,27 @@ Delete one of the above lines and press ""Recover Secret""";
                 secretsChecklist.SetItemCheckState(secretsChecklistCheckedIndex.Value, CheckState.Unchecked);
             }
 
+            activeCollection = secretCollections[e.Index];
+
             groupBox4.Visible = e.CurrentValue == CheckState.Unchecked;
             secretsChecklistCheckedIndex = e.Index;
         }
 
         private class SecretCollection
         {
-            private readonly List<string> _directories;
+            public string SecretName { get; }
 
-            public SecretCollection(params string[] directories)
+            public List<string> Directories { get; } = new List<string>();
+
+            public SecretCollection(string secretName, params string[] directories)
             {
-                _directories.AddRange(directories);
+                SecretName = secretName;
+                Directories.AddRange(directories);
+            }
+
+            public override string ToString()
+            {
+                return SecretName + "\n" + Directories.Aggregate((str1, str2) => str1 + "\n" + str2);
             }
         }
     }
