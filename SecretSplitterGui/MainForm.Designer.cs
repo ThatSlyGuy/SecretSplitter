@@ -70,7 +70,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.passwordTextbox = new System.Windows.Forms.TextBox();
+            this.buttonDecryptSecret = new System.Windows.Forms.Button();
             this.tabs.SuspendLayout();
             this.tabRecover.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -600,6 +601,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonDecryptSecret);
             this.panel1.Controls.Add(this.groupBox4);
             this.panel1.Controls.Add(this.secretsChecklist);
             this.panel1.Controls.Add(this.label11);
@@ -611,7 +613,7 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.textBox1);
+            this.groupBox4.Controls.Add(this.passwordTextbox);
             this.groupBox4.Location = new System.Drawing.Point(203, 29);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(310, 52);
@@ -620,12 +622,24 @@
             this.groupBox4.Text = "Enter the password to decrypt the secrets:";
             this.groupBox4.Visible = false;
             // 
-            // textBox1
+            // passwordTextbox
             // 
-            this.textBox1.Location = new System.Drawing.Point(7, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(295, 20);
-            this.textBox1.TabIndex = 0;
+            this.passwordTextbox.Location = new System.Drawing.Point(7, 20);
+            this.passwordTextbox.Name = "passwordTextbox";
+            this.passwordTextbox.PasswordChar = '*';
+            this.passwordTextbox.Size = new System.Drawing.Size(295, 20);
+            this.passwordTextbox.TabIndex = 0;
+            // 
+            // buttonDecryptSecret
+            // 
+            this.buttonDecryptSecret.Location = new System.Drawing.Point(203, 87);
+            this.buttonDecryptSecret.Name = "buttonDecryptSecret";
+            this.buttonDecryptSecret.Size = new System.Drawing.Size(310, 96);
+            this.buttonDecryptSecret.TabIndex = 6;
+            this.buttonDecryptSecret.Text = "Decrypt Secret";
+            this.buttonDecryptSecret.UseVisualStyleBackColor = true;
+            this.buttonDecryptSecret.Visible = false;
+            this.buttonDecryptSecret.Click += new System.EventHandler(this.buttonDecryptSecret_Click);
             // 
             // MainForm
             // 
@@ -721,7 +735,8 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox passwordTextbox;
+        private System.Windows.Forms.Button buttonDecryptSecret;
     }
 }
 

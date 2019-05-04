@@ -7,7 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+//using Hope.Random;
+//using Hope.Random.Strings;
 using Moserware.Security.Cryptography;
+//using Org.BouncyCastle.Crypto.Digests;
 
 // NOTE: This GUI is just a prototype of an idea and not meant to be a demonstration of good techniques.
 //       Obviously a better designed UI would make use of resource strings, data binding, and enhanced 
@@ -427,8 +430,15 @@ Delete one of the above lines and press ""Recover Secret""";
                                          .Select(drive => Directory.GetDirectories(drive.RootDirectory.FullName).Single(directory => directory.Contains("secrets")))
                                          .ToList();
 
+            secretsChecklist.Items.Clear();
+            validSecrets.Clear();
+            secretCollections.Clear();
+
             if (directories.Count() < MIN_SECRETS_COUNT)
+            {
+                panel1.Visible = false;
                 return;
+            }
 
             List<string> tempSecrets = new List<string>();
             List<string> files = new List<string>();
@@ -464,7 +474,7 @@ Delete one of the above lines and press ""Recover Secret""";
                                                                         .ToArray()));
             }
 
-            panel1.Visible = true;
+            panel1.Visible = directories.Count() >= MIN_SECRETS_COUNT;
         }
 
         private readonly List<string> validSecrets = new List<string>();
@@ -491,8 +501,39 @@ Delete one of the above lines and press ""Recover Secret""";
 
             activeCollection = secretCollections[e.Index];
 
+            buttonDecryptSecret.Visible = e.CurrentValue == CheckState.Unchecked;
             groupBox4.Visible = e.CurrentValue == CheckState.Unchecked;
             secretsChecklistCheckedIndex = e.Index;
+        }
+
+        private void buttonDecryptSecret_Click(object sender, EventArgs e)
+        {
+            string password = passwordTextbox.Text;
+
+            if (string.IsNullOrEmpty(password))
+                return;
+
+            MessageBox.Show(password);
+
+            try
+            {
+                foreach (var directory in activeCollection.Directories)
+                {
+                    MessageBox.Show(directory);
+
+                    using (StreamReader readtext = new StreamReader(directory))
+                    {
+                        string ciphertext = readtext.ReadLine();
+                        string decryptedSecret = SecretEncryptor.Program.Decrypt(ciphertext, password);
+
+                        MessageBox.Show(decryptedSecret);
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("INVALID PASSWORD");
+            }
         }
 
         private class SecretCollection

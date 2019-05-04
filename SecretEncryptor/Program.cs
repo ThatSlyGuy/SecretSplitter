@@ -76,7 +76,7 @@ namespace SecretEncryptor
             }
         }
 
-        private static string Decrypt(string ciphertext, string key)
+        public static string Decrypt(string ciphertext, string key)
         {
             using (SecretEncryptor dataEncryptor = new SecretEncryptor(new AdvancedSecureRandom(new Blake2bDigest(512), RandomString.Secure.Blake2.GetString(key, 64))))
             {
