@@ -10,10 +10,10 @@ namespace SecretEncryptor
 {
     public class Program
     {
+        private const int SECRET_COUNT = 4;
+
         private static void Main(string[] args)
         {
-            //ReadDrives();
-
             DoEncryption();
             DoDecryption();
 
@@ -30,7 +30,7 @@ namespace SecretEncryptor
 
             string key = Console.ReadLine();
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < SECRET_COUNT; i++)
             {
                 using (StreamReader readtext = new StreamReader(name + "_secret_" + (i + 1) + ".txt"))
                 {
@@ -52,7 +52,7 @@ namespace SecretEncryptor
 
             string key = Console.ReadLine();
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < SECRET_COUNT; i++)
             {
                 Console.WriteLine("\nEnter secret #" + (i + 1) + ":");
 
@@ -81,24 +81,6 @@ namespace SecretEncryptor
             using (SecretEncryptor dataEncryptor = new SecretEncryptor(new AdvancedSecureRandom(new Blake2bDigest(512), RandomString.Secure.Blake2.GetString(key, 64))))
             {
                 return dataEncryptor.Decrypt(ciphertext, RandomString.Secure.SHA3.GetString(key, 64));
-            }
-        }
-
-        private static void ReadDrives()
-        {
-            var drives = DriveInfo.GetDrives()
-                                  .Where(drive => drive.IsReady);
-
-            foreach (DriveInfo d in drives)
-            {
-                Console.WriteLine(d.Name + " => " + d.DriveType + " " + d.IsReady);
-
-                var directories = Directory.GetDirectories(d.RootDirectory.FullName);
-
-                foreach (var directory in directories)
-                {
-                    Console.WriteLine(directory);
-                }
             }
         }
     }

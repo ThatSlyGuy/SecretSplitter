@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -412,6 +413,103 @@ Delete one of the above lines and press ""Recover Secret""";
         private void chkShowAdvancedFileOptions_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSecretPanels();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var readyDrives = DriveInfo.GetDrives()
+                                  .Where(drive => drive.IsReady);
+
+            var directories = readyDrives.Where(drive => Directory.GetDirectories(drive.RootDirectory.FullName)
+                                         .Contains(drive.Name + "secrets"))
+                                         .Select(drive => Directory.GetDirectories(drive.RootDirectory.FullName).Single(directory => directory.Contains("secrets")))
+                                         .ToList();
+
+            //foreach (DriveInfo d in drives)
+            //{
+            //    Console.WriteLine(d.Name + " => " + d.DriveType + " " + d.IsReady);
+
+            //    var directories = Directory.GetDirectories(d.RootDirectory.FullName);
+
+            //    foreach (var directory in directories)
+            //    {
+            //        Console.WriteLine(directory);
+            //    }
+            //}
+
+            if (directories.Count() < 2)
+                return;
+
+            List<string> uniqueSecrets = new List<string>();
+            List<string[]> files = new List<string[]>();
+
+            for (int i = 0; i < directories.Count(); i++)
+            {
+                files.Add(Directory.GetFiles(directories[i]));
+
+                string[] directoryFiles = files[i];
+
+                for (int j = 0; j < directoryFiles.Count(); j++)
+                {
+                    string temp = directoryFiles[j].Remove(0, directoryFiles[j].LastIndexOf('\\') + 1);
+                    string uniqueSecret = temp.Remove(temp.Length - 6, 6);
+
+                    uniqueSecrets.Add(uniqueSecret);
+                }
+            }
+
+            uniqueSecrets = uniqueSecrets.Distinct().ToList();
+
+            foreach (var fileCollection in files)
+            {
+                bool hasFile = false;
+
+
+                // Make sure that each collection of files has each unique secret
+                for (int i = 0; i < fileCollection.Length; i++)
+                {
+                    //hasFile = fileCollection[i].Contains()
+                    MessageBox.Show(fileCollection[i]);
+                }
+            }
+
+            //foreach (var secret in uniqueSecrets)
+            //{
+            //    MessageBox.Show(secret);
+            //}
+
+            panel1.Visible = true;
+        }
+
+        private bool pass;
+        private int? secretsChecklistCheckedIndex;
+
+        private void secretsChecklist_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (pass)
+            {
+                pass = false;
+                return;
+            }
+
+            if (secretsChecklistCheckedIndex.HasValue && secretsChecklist.GetItemChecked(secretsChecklistCheckedIndex.Value))
+            {
+                pass = true;
+                secretsChecklist.SetItemCheckState(secretsChecklistCheckedIndex.Value, CheckState.Unchecked);
+            }
+
+            groupBox4.Visible = e.CurrentValue == CheckState.Unchecked;
+            secretsChecklistCheckedIndex = e.Index;
+        }
+
+        private class SecretCollection
+        {
+            private readonly List<string> _directories;
+
+            public SecretCollection(params string[] directories)
+            {
+                _directories.AddRange(directories);
+            }
         }
     }
 }

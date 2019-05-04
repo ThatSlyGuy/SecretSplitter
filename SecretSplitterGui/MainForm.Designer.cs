@@ -66,7 +66,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.secretsChecklist = new System.Windows.Forms.CheckedListBox();
             this.label11 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -556,10 +556,10 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(8, 12);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(500, 13);
+            this.label6.Size = new System.Drawing.Size(505, 13);
             this.label6.TabIndex = 0;
-            this.label6.Text = "Enter the drives you wish to read from. The crypto folder must be located in the " +
-    "root directory of the drive.";
+            this.label6.Text = "Enter the drives you wish to read from. The secrets folder must be located in the" +
+    " root directory of the drive.";
             // 
             // label10
             // 
@@ -578,14 +578,16 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Scan";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // checkedListBox1
+            // secretsChecklist
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(3, 29);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(194, 154);
-            this.checkedListBox1.TabIndex = 3;
+            this.secretsChecklist.FormattingEnabled = true;
+            this.secretsChecklist.Location = new System.Drawing.Point(3, 29);
+            this.secretsChecklist.Name = "secretsChecklist";
+            this.secretsChecklist.Size = new System.Drawing.Size(194, 154);
+            this.secretsChecklist.TabIndex = 3;
+            this.secretsChecklist.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.secretsChecklist_ItemCheck);
             // 
             // label11
             // 
@@ -599,12 +601,13 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.groupBox4);
-            this.panel1.Controls.Add(this.checkedListBox1);
+            this.panel1.Controls.Add(this.secretsChecklist);
             this.panel1.Controls.Add(this.label11);
             this.panel1.Location = new System.Drawing.Point(3, 57);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(520, 188);
             this.panel1.TabIndex = 5;
+            this.panel1.Visible = false;
             // 
             // groupBox4
             // 
@@ -615,6 +618,7 @@
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Enter the password to decrypt the secrets:";
+            this.groupBox4.Visible = false;
             // 
             // textBox1
             // 
@@ -713,7 +717,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckedListBox secretsChecklist;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox4;
