@@ -526,7 +526,6 @@ Delete one of the above lines and press ""Recover Secret""";
                 }
 
                 RecoverText(combinedDecryptedSecrets);
-                //MessageBox.Show(combinedDecryptedSecrets);
             }
             catch
             {
