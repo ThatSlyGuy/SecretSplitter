@@ -513,22 +513,20 @@ Delete one of the above lines and press ""Recover Secret""";
             if (string.IsNullOrEmpty(password))
                 return;
 
-            MessageBox.Show(password);
-
             try
             {
+                string combinedDecryptedSecrets = "";
                 foreach (var directory in activeCollection.Directories)
                 {
-                    MessageBox.Show(directory);
-
                     using (StreamReader readtext = new StreamReader(directory))
                     {
                         string ciphertext = readtext.ReadLine();
-                        string decryptedSecret = SecretEncryptor.Program.Decrypt(ciphertext, password);
-
-                        MessageBox.Show(decryptedSecret);
+                        combinedDecryptedSecrets += SecretEncryptor.Program.Decrypt(ciphertext, password) + "\n";
                     }
                 }
+
+                RecoverText(combinedDecryptedSecrets);
+                //MessageBox.Show(combinedDecryptedSecrets);
             }
             catch
             {
