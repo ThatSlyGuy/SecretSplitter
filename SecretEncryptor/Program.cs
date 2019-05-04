@@ -10,7 +10,7 @@ namespace SecretEncryptor
 {
     public class Program
     {
-        private const int SECRET_COUNT = 4;
+        private const int SECRET_COUNT = 6;
 
         private static void Main(string[] args)
         {
