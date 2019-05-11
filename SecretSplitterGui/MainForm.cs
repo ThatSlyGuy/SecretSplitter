@@ -513,6 +513,8 @@ Delete one of the above lines and press ""Recover Secret""";
             if (string.IsNullOrEmpty(password))
                 return;
 
+            passwordTextbox.Text = String.Empty;
+
             try
             {
                 string combinedDecryptedSecrets = "";

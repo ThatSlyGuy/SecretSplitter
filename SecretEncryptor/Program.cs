@@ -56,7 +56,7 @@ namespace SecretEncryptor
             {
                 Console.WriteLine("\nEnter secret #" + (i + 1) + ":");
 
-                string secret = Console.ReadLine();
+                string secret = ReadLine();
                 string encryptedSecret = Encrypt(secret, key);
 
                 Console.WriteLine("\nSecret #" + (i + 1) + " encrypted: " + encryptedSecret + "\n");
@@ -82,6 +82,14 @@ namespace SecretEncryptor
             {
                 return dataEncryptor.Decrypt(ciphertext, RandomString.Secure.SHA3.GetString(key, 64));
             }
+        }
+
+        private static string ReadLine()
+        {
+            byte[] inputBuffer = new byte[1024];
+            Stream inputStream = Console.OpenStandardInput(inputBuffer.Length);
+            Console.SetIn(new StreamReader(inputStream, Console.InputEncoding, false, inputBuffer.Length));
+            return Console.ReadLine();
         }
     }
 }
