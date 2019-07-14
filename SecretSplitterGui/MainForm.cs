@@ -7,9 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Hope.Random;
+using Hope.Random.Strings;
 //using Hope.Random;
 //using Hope.Random.Strings;
 using Moserware.Security.Cryptography;
+using Org.BouncyCastle.Crypto.Digests;
 //using Org.BouncyCastle.Crypto.Digests;
 
 // NOTE: This GUI is just a prototype of an idea and not meant to be a demonstration of good techniques.
@@ -462,14 +465,14 @@ Delete one of the above lines and press ""Recover Secret""";
 
             foreach (var secret in tempSecrets)
             {
-                if (files.Where(file => file.Contains(secret)).Count() >= MIN_SECRETS_COUNT)
+                if (files.Count(file => file.Remove(file.LastIndexOf('_')).Remove(0, file.LastIndexOf('\\') + 1).Equals(secret)) >= MIN_SECRETS_COUNT)
                     validSecrets.Add(secret);
             }
 
             foreach (var secret in validSecrets)
             {
                 secretsChecklist.Items.Add(secret, false);
-                secretCollections.Add(new SecretCollection(secret, files.Where(file => file.Contains(secret))
+                secretCollections.Add(new SecretCollection(secret, files.Where(file => file.Remove(file.LastIndexOf('_')).Remove(0, file.LastIndexOf('\\') + 1).Equals(secret))
                                                                         .Take(MIN_SECRETS_COUNT)
                                                                         .ToArray()));
             }

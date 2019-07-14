@@ -3,6 +3,7 @@ using Hope.Random.Strings;
 using Hope.Security.SymmetricEncryption.DotNetDPAPI;
 using Org.BouncyCastle.Crypto.Digests;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace SecretEncryptor
 {
     public class Program
     {
-        private const int SECRET_COUNT = 6;
+        private const int SECRET_COUNT = 7;
 
         private static void Main(string[] args)
         {
