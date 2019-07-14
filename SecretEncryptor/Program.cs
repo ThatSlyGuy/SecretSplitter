@@ -1,11 +1,8 @@
 using Hope.Random;
 using Hope.Random.Strings;
-using Hope.Security.SymmetricEncryption.DotNetDPAPI;
 using Org.BouncyCastle.Crypto.Digests;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace SecretEncryptor
 {
